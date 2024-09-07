@@ -3,6 +3,10 @@
 
 #define ATTEMPTS 6
 #define MAX_LEN 100
+
+#define FILE_WORDS 58109
+const char FILENAME[] = "wordlist.txt";
+
 class HangmanGame {
 public:
 	HangmanGame();

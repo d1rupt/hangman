@@ -1,14 +1,19 @@
 #include "declarations.h"
 #include <iostream>
 #include <string>
+#include <cstdlib>
+#include <ctime>
+#include <fstream>
+
 using namespace std;
 
 HangmanGame::HangmanGame() {
 	points = 0;
+	srand(time(nullptr));
 }
 void HangmanGame::gameLoop() {
 	cout << "Welcome to hangman!" << endl;
-	cout << "Whould you like to play? (y/n)" << endl;
+	cout << "Would you like to play? (y/n)" << endl;
 	char answ;
 	while (cin >> answ && answ == 'y') {
 		this->getRandomWord();
@@ -68,12 +73,20 @@ void HangmanGame::letterGuess(char guess) {
 }
 //BAD!
 void HangmanGame::getRandomWord() {
-	strncpy_s(secret_word, "secret", 6);
+	int line_num = rand() % FILE_WORDS + 1;
+	//cout << line_num << endl;
+	ifstream file(FILENAME);
+
+	for (int i = 0; i < line_num; i++) {
+		file >> secret_word;
+	}
+	file.close();
+	//strncpy_s(secret_word, "secret", 6);
 }
 
 void HangmanGame::printState() {
-	cout << "Guessed: " << guessed << endl;
-	cout << "Left attempts: " << left_attempts << endl;
+	//cout << "Guessed: " << guessed << endl;
+	cout << "Attempts left: " << left_attempts << endl;
 	cout << "Incorrect letters: ";
 	for (int i = 0; i < incorrect_letters_len; i++) {
 		cout << incorrect_letters[i] << " ";
